@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "scrap": "node index.js",
-    "postnevimscrap": "rimraf temp"
+    "postscrap": "rimraf temp"
   },
   "dependencies": {
     "axios": "^0.21.1",
