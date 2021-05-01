@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cli-progress": "^3.9.0",
     "file-type": "^16.3.0",
     "image-size": "^1.0.0",
     "node-html-parser": "^3.1.0",

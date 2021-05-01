@@ -16,12 +16,7 @@ const downloadImage = async (imageUrl, index, savedFolder) => {
   const imageWriter = fs.createWriteStream(imagePath);
   responseImg.data.pipe(imageWriter);
 
-  return new Promise((resolve) => {
-    imageWriter.on('close', () => {
-      console.log('Image', imageName, 'saved!');
-      resolve();
-    });
-  });
+  return new Promise((resolve) => imageWriter.on('close', () => resolve));
 };
 
 module.exports = downloadImage;
