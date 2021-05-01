@@ -9,16 +9,19 @@ const getImageFileSuffix = (imageFileName) =>
   imageFileName.split('filename=')[1].split('"').join('').split('.')[1];
 
 const downloadImage = async (imageUrl, index, savedFolder) => {
-  const responseImg = await axios.get(imageUrl, {
-    responseType: 'stream',
-  });
-
+  const responseImg = await axios.get(imageUrl, { responseType: 'stream' });
   const fileSuffix = getImageFileSuffix(responseImg.headers['content-disposition']);
   const imageName = getImageName(index.toString(), fileSuffix);
   const imagePath = path.resolve(savedFolder, imageName);
-  responseImg.data.pipe(fs.createWriteStream(imagePath));
+  const imageWriter = fs.createWriteStream(imagePath);
+  responseImg.data.pipe(imageWriter);
 
-  console.log('Image', imageName, 'saved!');
+  return new Promise((resolve) => {
+    imageWriter.on('close', () => {
+      console.log('Image', imageName, 'saved!');
+      resolve();
+    });
+  });
 };
 
 module.exports = downloadImage;
