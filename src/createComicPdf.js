@@ -9,15 +9,15 @@ const getComicFolderPath = (comicName) => path.resolve(TEMP_FOLDER_PATH, comicNa
 const getComicPdfPath = (comicName) => path.resolve(PDF_FOLDER_PATH, `${comicName}.pdf`);
 
 const createComicPdf = async (imageUrls, comicName) => {
-  const comicFolderPath = getComicFolderPath(comicName);
-  createFolder(comicFolderPath);
+  const imagesFolderPath = getComicFolderPath(comicName);
+  createFolder(imagesFolderPath);
 
   try {
     for (const imageIndex in imageUrls) {
-      await downloadImage(imageUrls[imageIndex], imageIndex, comicFolderPath);
+      await downloadImage(imageUrls[imageIndex], imageIndex, imagesFolderPath);
     }
 
-    createImagesPdf(comicFolderPath, getComicPdfPath(comicName));
+    await createImagesPdf(imagesFolderPath, getComicPdfPath(comicName));
   } catch (err) {
     console.log('Create pdf error:', err);
   }
