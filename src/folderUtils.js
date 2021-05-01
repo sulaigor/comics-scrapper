@@ -7,7 +7,14 @@ const createFolder = (folderPath) => {
   }
 };
 
+const removeFolder = (folderPath) => {
+  if (fs.existsSync(folderPath)) {
+    fs.rmdirSync(folderPath, { recursive: true });
+  }
+};
+
 const createOutputFolder = () => createFolder(PDF_FOLDER_PATH);
 const createTempFolder = () => createFolder(TEMP_FOLDER_PATH);
+const removeTempFolder = () => removeFolder(TEMP_FOLDER_PATH);
 
-module.exports = { createFolder, createOutputFolder, createTempFolder };
+module.exports = { createFolder, createOutputFolder, createTempFolder, removeTempFolder };
