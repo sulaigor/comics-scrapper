@@ -1,5 +1,6 @@
-const getImageUrls = require('./getImageUrls');
-const createComicPdf = require('./createComicPdf');
+import { getImageUrls } from './getImageUrls';
+import { createComicPdf } from './createComicPdf';
+import { IComic } from './comic';
 
 const CONSOLE_COLOURS = {
   RESET: '\x1b[0m',
@@ -9,12 +10,11 @@ const CONSOLE_COLOURS = {
   BLUE: '\x1b[34m',
 };
 
-const createComicPdfs = async (comics) => {
+export const createComicPdfs = async (comics: IComic[]) => {
   for (const { name, url } of comics) {
     const imageUrls = await getImageUrls(url);
 
-    console.log(CONSOLE_COLOURS.BLUE);
-    console.log('Start creating comic', name, CONSOLE_COLOURS.RESET, '\n');
+    console.log('\nStart creating comic', name);
 
     if (imageUrls) {
       await createComicPdf(imageUrls, name);
@@ -27,5 +27,3 @@ const createComicPdfs = async (comics) => {
     console.log('Comic', name, 'succesfully created!', CONSOLE_COLOURS.RESET);
   }
 };
-
-module.exports = createComicPdfs;

@@ -1,15 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const sizeOf = require('image-size');
-const FileType = require('file-type');
-const PDFKit = require('pdfkit');
+import * as fs from 'fs';
+import * as path from 'path';
+import sizeOf from 'image-size';
+import { fromFile } from 'file-type';
+import * as PDFKit from 'pdfkit';
+import { handleWriter } from './writerUtils';
 
-const isImageFile = async (filePath) => {
-  const { mime } = await FileType.fromFile(filePath);
+const isImageFile = async (filePath: string): Promise<boolean> => {
+  const { mime } = await fromFile(filePath);
   return mime.includes('image');
 };
 
-const createImagesPdf = async (imagesFolderPath, outputPdfPath) => {
+export const createImagesPdf = async (imagesFolderPath, outputPdfPath): Promise<void> => {
   const imagesFiles = fs.readdirSync(imagesFolderPath);
   const pdfWriter = fs.createWriteStream(path.resolve(outputPdfPath));
 
@@ -32,7 +33,5 @@ const createImagesPdf = async (imagesFolderPath, outputPdfPath) => {
   }
 
   doc.end();
-  return new Promise((resolve) => pdfWriter.on('close', resolve));
+  return handleWriter(pdfWriter);
 };
-
-module.exports = createImagesPdf;

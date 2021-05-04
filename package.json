@@ -1,11 +1,11 @@
 {
   "name": "comics-scrapper",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "author": "Igor Šula",
   "license": "MIT",
   "scripts": {
-    "scrap": "node index.js"
+    "scrap": "ts-node index"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -14,6 +14,12 @@
     "image-size": "^1.0.0",
     "node-html-parser": "^3.1.0",
     "pdfkit": "^0.12.1",
-    "query-string": "^7.0.0"
+    "query-string": "^7.0.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.2",
+    "@types/query-string": "^6.3.0"
   }
 }
