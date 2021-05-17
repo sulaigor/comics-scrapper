@@ -1,6 +1,6 @@
-import { getImageUrls } from './getImageUrls';
-import { createComicPdf } from './createComicPdf';
-import { IComic } from './comic';
+import { getImageUrls } from 'getImageUrls';
+import { createComicPdf } from 'createComicPdf';
+import { IComic } from 'comic';
 
 const CONSOLE_COLOURS = {
   RESET: '\x1b[0m',

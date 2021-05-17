@@ -1,6 +1,6 @@
-import { createTempFolder, createOutputFolder, removeTempFolder } from './src/folderUtils';
-import { createComicPdfs } from './src/createComicPdfs';
-import comics from './comics';
+import comics from 'comics';
+import { createTempFolder, createOutputFolder, removeTempFolder } from 'folderUtils';
+import { createComicPdfs } from 'createComicPdfs';
 
 (async () => {
   createOutputFolder();

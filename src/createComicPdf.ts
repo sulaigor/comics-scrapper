@@ -1,9 +1,9 @@
 import * as path from 'path';
 import { SingleBar } from 'cli-progress';
-import { createFolder } from './folderUtils';
-import { PDF_FOLDER_PATH, TEMP_FOLDER_PATH } from './const';
-import { downloadImage } from './downloadImage';
-import { createImagesPdf } from './createImagesPdf';
+import { createFolder } from 'folderUtils';
+import { PDF_FOLDER_PATH, TEMP_FOLDER_PATH } from 'const';
+import { downloadImage } from 'downloadImage';
+import { createImagesPdf } from 'createImagesPdf';
 
 const getComicFolderPath = (comicName: string) => path.resolve(TEMP_FOLDER_PATH, comicName);
 const getComicPdfPath = (comicName: string) => path.resolve(PDF_FOLDER_PATH, `${comicName}.pdf`);

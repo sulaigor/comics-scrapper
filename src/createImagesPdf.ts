@@ -3,14 +3,25 @@ import * as path from 'path';
 import sizeOf from 'image-size';
 import { fromFile } from 'file-type';
 import * as PDFKit from 'pdfkit';
-import { handleWriter } from './writerUtils';
+import { handleWriter } from 'writerUtils';
 
 const isImageFile = async (filePath: string): Promise<boolean> => {
-  const { mime } = await fromFile(filePath);
-  return mime.includes('image');
+  try {
+    const result = await fromFile(filePath);
+
+    if (result) {
+      const { mime } = result;
+      return mime.includes('image');
+    }
+
+    return false;
+  } catch (err) {
+    console.log('Is image file error:', err);
+    return false;
+  }
 };
 
-export const createImagesPdf = async (imagesFolderPath, outputPdfPath): Promise<void> => {
+export const createImagesPdf = async (imagesFolderPath: string, outputPdfPath: string): Promise<void> => {
   const imagesFiles = fs.readdirSync(imagesFolderPath);
   const pdfWriter = fs.createWriteStream(path.resolve(outputPdfPath));
 
@@ -25,7 +36,7 @@ export const createImagesPdf = async (imagesFolderPath, outputPdfPath): Promise<
     try {
       const { width, height } = await sizeOf(filePath);
 
-      doc.addPage({ size: [width, height] });
+      doc.addPage({ size: [Number(width), Number(height)] });
       doc.image(filePath, 0, 0, { width, height });
     } catch (err) {
       console.log('Create pdf error:', imageFile, err);

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import axios from 'axios';
-import { handleWriter } from './writerUtils';
+import { handleWriter } from 'writerUtils';
 
 const getPaddedFileName = (fileName: string): string => fileName.padStart(5, '0');
 const getImageName = (fileName: string, fileSuffix: string): string =>

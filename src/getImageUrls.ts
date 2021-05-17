@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { parse as parseHTML } from 'node-html-parser';
 import { stringifyUrl } from 'query-string';
-import { URL_REGEX } from './const';
+import { URL_REGEX } from 'const';
 
-const getUrls = (scriptContent: string): string[] => scriptContent.match(new RegExp(URL_REGEX));
+const getUrls = (scriptContent: string) => scriptContent.match(new RegExp(URL_REGEX));
 const getComicUrl = (comicUrl: string) => stringifyUrl({ url: comicUrl, query: { quality: 'hq' } });
 
 const getScriptWithImages = (html: string) => {

@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { PDF_FOLDER_PATH, TEMP_FOLDER_PATH } from './const';
+import { PDF_FOLDER_PATH, TEMP_FOLDER_PATH } from 'const';
 
 export const createFolder = (folderPath: string) => {
   if (!fs.existsSync(folderPath)) {
