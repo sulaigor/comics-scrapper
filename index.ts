@@ -1,14 +1,10 @@
 import comics from 'comics';
 import { createTempFolder, createOutputFolder, removeTempFolder } from 'folderUtils';
 import { createComicPdfs } from 'createComicPdfs';
+import { printDownloadComics } from 'printDownloadComics';
 
 (async () => {
-  console.log(
-    '\nI have',
-    comics.length,
-    'commics for download:',
-    comics.reduce((acc, { name }) => acc + name + '\n', '\n'),
-  );
+  printDownloadComics(comics);
 
   createOutputFolder();
   createTempFolder();
