@@ -5,7 +5,9 @@
   "author": "Igor Šula",
   "license": "MIT",
   "scripts": {
-    "scrap": "tsnd --no-notify -r tsconfig-paths/register --ignore-watch node_modules --transpile-only index.ts",
+    "run-file": "tsnd --no-notify -r tsconfig-paths/register --ignore-watch node_modules --transpile-only",
+    "scrap": "npm run run-file -- index.ts",
+    "how-much": "npm run run-file -- howMuch.ts",
     "type-check": "tsc"
   },
   "dependencies": {
