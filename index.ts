@@ -8,6 +8,5 @@ import { createComicPdfs } from 'createComicPdfs';
   await createComicPdfs(comics);
   removeTempFolder();
 
-  console.log('I am done. \nHave a nice reading!\n');
-  process.exit(0);
+  console.log('\nI am done... \nHave a nice reading!\n');
 })();
