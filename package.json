@@ -9,7 +9,7 @@
     "scrap": "npm run run-file -- index.ts",
     "prescrap": "npm run how-much",
     "how-much": "npm run run-file -- howMuch.ts",
-    "type-check": "tsc"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "axios": "^0.21.1",
