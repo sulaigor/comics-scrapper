@@ -13,3 +13,9 @@ export const exitScriptWithMessage = (color: ConsoleColours, msg: string): never
 
 export const exitScript = (): never =>
   exitScriptWithMessage(ConsoleColours.GREEN, '\nI am done... \nHave a nice day!');
+
+export const tryValue = (tryValue: any, msg: string): void => {
+  if (!tryValue) {
+    exitScriptWithMessage(ConsoleColours.RED, msg);
+  }
+};
