@@ -43,7 +43,7 @@ export const printComicsSource = (comicsSource: IComicSource[]): void => {
     .slice(0, 5)
     .map(({ link, title }, index) => `${index + 1}. title: ${title}, link: ${link}`)
     .join('\n');
-  printColoredMessage(ConsoleColours.BLUE, `${comicsList}...`);
+  printColoredMessage(ConsoleColours.BLUE, `${comicsList}\n...\n`);
 };
 
 export const editComicsSource = (comicsSource: IComicSource[], titlePrefix: string): IComicSource[] =>
