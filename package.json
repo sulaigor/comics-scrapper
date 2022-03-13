@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "run-file": "tsnd --no-notify -r tsconfig-paths/register --ignore-watch node_modules --transpile-only",
+    "create-comics": "npm run run-file -- createComicsSource.ts",
     "scrap": "npm run run-file -- index.ts",
     "prescrap": "npm run how-much",
     "how-much": "npm run run-file -- howMuch.ts",
