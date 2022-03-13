@@ -1,9 +1,15 @@
+# Generated modules
 node_modules
 .DS_Store
 
+# PDF folders
 pdf
 temp
 comics
 comics.*
 
+# Notes
 NOTES.md
+
+# Generated comics source
+newComicSource.ts
