@@ -1,14 +1,8 @@
+import { IComic } from 'comic';
+import { ConsoleColours } from 'const';
+import { printColoredMessage } from 'consoleUtils';
 import { getImageUrls } from 'getImageUrls';
 import { createComicPdf } from 'createComicPdf';
-import { IComic } from 'comic';
-
-const CONSOLE_COLOURS = {
-  RESET: '\x1b[0m',
-  RED: '\x1b[31m',
-  GREEN: '\x1b[32m',
-  YELLOW: '\x1b[33m',
-  BLUE: '\x1b[34m',
-};
 
 export const createComicPdfs = async (comics: IComic[]) => {
   for (const { name, url } of comics) {
@@ -18,12 +12,9 @@ export const createComicPdfs = async (comics: IComic[]) => {
 
     if (imageUrls) {
       await createComicPdf(imageUrls, name);
-    } else {
-      console.log(CONSOLE_COLOURS.RED);
-      console.log('Images not found for', name, 'comic...');
+      printColoredMessage(ConsoleColours.GREEN, `Comic ${name} succesfully created!`);
     }
 
-    console.log(CONSOLE_COLOURS.GREEN);
-    console.log('Comic', name, 'succesfully created!', CONSOLE_COLOURS.RESET);
+    printColoredMessage(ConsoleColours.RED, `Images not found for ${name} comic...`);
   }
 };
