@@ -6,7 +6,8 @@ export const getHtml = async (htmlUrl: string): Promise<HTMLElement | null> => {
     const { data: html } = await axios.get<string>(htmlUrl);
     return parseHTML(html);
   } catch (err) {
-    console.log('Get html error:', err);
+    const { message } = err as Error;
+    console.log('Get html error:', message);
   }
 
   return null;
