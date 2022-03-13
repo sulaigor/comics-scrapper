@@ -30,7 +30,7 @@ readline.question('Enter comics list url:\n', async (htmlUrl) => {
   let comicsSource: IComicSource[] = getComicsSource(linksArr);
 
   printComicsSource(comicsSource);
-  readline.question('Do you want edit comics title? Enter prefix:\n', (titlePrefix) => {
+  readline.question('Do you want edit comics title? Enter prefix or continue:\n', (titlePrefix) => {
     if (titlePrefix) {
       comicsSource = editComicsSource(comicsSource, titlePrefix);
       printComicsSource(comicsSource);
