@@ -13,8 +13,8 @@ export const createComicPdfs = async (comics: IComic[]) => {
     if (imageUrls) {
       await createComicPdf(imageUrls, name);
       printColoredMessage(ConsoleColours.GREEN, `Comic ${name} succesfully created!`);
+    } else {
+      printColoredMessage(ConsoleColours.RED, `Images not found for ${name} comic...`);
     }
-
-    printColoredMessage(ConsoleColours.RED, `Images not found for ${name} comic...`);
   }
 };
