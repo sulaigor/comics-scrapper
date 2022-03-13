@@ -23,10 +23,16 @@ export const createComicsSource = (comicsSource: IComicSource[]): string => {
   ].join('\n');
 };
 
+const getComicSourceTitle = (text: string): string =>
+  text
+    .trim()
+    .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '')
+    .replace(/\s+/g, '-');
+
 export const getComicsSource = (linksArr: HTMLElement[]): IComicSource[] =>
   Array.from(linksArr)
     .map((a) => ({
-      title: a.text.trim().replace('#', '').split(' ').join('-'),
+      title: getComicSourceTitle(a.text),
       link: a.attrs.href,
     }))
     .reverse();
