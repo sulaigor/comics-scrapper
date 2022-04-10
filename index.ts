@@ -1,4 +1,4 @@
-import comics from 'comics';
+import rawComics from 'comics';
 import { createTempFolder, createOutputFolder, removeTempFolder } from 'folderUtils';
 import { createComicPdfs } from 'createComicPdfs';
 import { exitScript } from 'consoleUtils';
@@ -6,7 +6,7 @@ import { exitScript } from 'consoleUtils';
 (async () => {
   createOutputFolder();
   createTempFolder();
-  await createComicPdfs(comics);
+  await createComicPdfs(rawComics);
   removeTempFolder();
   exitScript();
 })();

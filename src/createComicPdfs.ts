@@ -1,10 +1,12 @@
-import { IComic } from 'comic';
+import { Comic, IComic } from 'comic';
 import { ConsoleColours } from 'const';
 import { printColoredMessage } from 'consoleUtils';
 import { getImageUrls } from 'getImageUrls';
 import { createComicPdf } from 'createComicPdf';
 
-export const createComicPdfs = async (comics: IComic[]) => {
+export const createComicPdfs = async (rawComics: IComic[]) => {
+  const comics: Comic[] = rawComics.map((comic) => (!(comic instanceof Comic) ? new Comic(comic) : comic));
+
   for (const { name, url } of comics) {
     const imageUrls = await getImageUrls(url);
 
