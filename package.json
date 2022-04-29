@@ -16,9 +16,14 @@
     "axios": "^0.26.1",
     "cli-progress": "^3.10.0",
     "file-type": "^16.5.3",
+    "fingerprint-generator": "^1.0.0",
+    "fingerprint-injector": "^1.0.0",
     "image-size": "^1.0.1",
     "node-html-parser": "^5.2.0",
     "pdfkit": "^0.13.0",
+    "puppeteer": "^10.4.0",
+    "puppeteer-extra": "^3.2.3",
+    "puppeteer-extra-plugin-stealth": "^2.9.0",
     "query-string": "^7.1.1"
   },
   "devDependencies": {
