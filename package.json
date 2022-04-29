@@ -4,6 +4,7 @@
   "main": "index.ts",
   "author": "Igor Šula",
   "license": "MIT",
+  "pre-commit": "type-check",
   "scripts": {
     "run-file": "tsnd --no-notify -r tsconfig-paths/register --ignore-watch node_modules --transpile-only",
     "create-comics": "npm run run-file -- createComicsSource.ts",
@@ -30,6 +31,7 @@
     "@types/cli-progress": "^3.9.2",
     "@types/node": "^16.11.7",
     "@types/pdfkit": "^0.12.6",
+    "pre-commit": "^1.2.2",
     "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.14.1",
