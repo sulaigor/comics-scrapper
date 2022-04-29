@@ -17,16 +17,18 @@ const readline = rl.createInterface({
   output: process.stdout,
 });
 
+const LINKS_HOLDER_SELECTOR = 'table.listing';
+
 // Try this url: https://readcomiconline.li/Comic/Star-Wars-Darth-Vader
 readline.question('Enter comics list url:\n', async (htmlUrl) => {
   tryValue(htmlUrl, 'You must enter html url for comics list!');
-  const html = await getHtml(htmlUrl);
+  const html = await getHtml(htmlUrl, LINKS_HOLDER_SELECTOR);
 
-  tryValue(html, 'Enter url is not correct!');
-  const linkTable = html!.querySelector('ul.list');
+  tryValue(html, 'Entered url is not correct!');
+  const linksHolder = html!.querySelector(LINKS_HOLDER_SELECTOR);
 
-  tryValue(linkTable, 'Link link does not exist!');
-  const linksArr = linkTable!.querySelectorAll('a');
+  tryValue(linksHolder, 'Links holder does not exist!');
+  const linksArr = linksHolder!.querySelectorAll('a');
   let comicsSource: IComicSource[] = getComicsSource(linksArr);
 
   printComicsSource(comicsSource);
