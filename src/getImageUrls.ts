@@ -1,9 +1,16 @@
 import { HTMLElement } from 'node-html-parser';
 import { stringifyUrl } from 'query-string';
-import { URL_REGEX } from 'const';
+import { beau } from 'rguard';
+import { IMAGES_REGEX } from 'const';
 import { getHtml } from 'htmlUtils';
 
-const getUrls = (scriptContent: string) => scriptContent.match(new RegExp(URL_REGEX));
+const getUrls = (scriptContent: string): string[] | null => {
+  const images =
+    scriptContent.match(new RegExp(IMAGES_REGEX))?.map((img) => img.replace(IMAGES_REGEX, '$1')) || null;
+  if (images) beau(images);
+  return images;
+};
+
 const getComicUrl = (comicUrl: string) => stringifyUrl({ url: comicUrl, query: { quality: 'hq' } });
 
 const getScriptWithImages = (html: HTMLElement): HTMLElement | undefined => {
