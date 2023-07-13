@@ -1,5 +1,4 @@
 import { HTMLElement } from 'node-html-parser';
-import { stringifyUrl } from 'query-string';
 import { beau } from 'rguard';
 import { IMAGES_REGEX } from 'const';
 import { getHtml } from 'htmlUtils';
@@ -11,7 +10,12 @@ const getUrls = (scriptContent: string): string[] | null => {
   return images;
 };
 
-const getComicUrl = (comicUrl: string) => stringifyUrl({ url: comicUrl, query: { quality: 'hq' } });
+const getComicUrl = (comicUrl: string): string => {
+  const newUrl = new URL(comicUrl);
+  newUrl.searchParams.append('quality', 'hq');
+  return newUrl.toString();
+};
+// queryString.stringify({ quality: 'hq' });
 
 const getScriptWithImages = (html: HTMLElement): HTMLElement | undefined => {
   const scripts = html.querySelectorAll('script');
