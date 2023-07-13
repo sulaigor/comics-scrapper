@@ -5,6 +5,9 @@
   "author": "Igor Šula",
   "license": "MIT",
   "pre-commit": "type-check",
+  "engines": {
+    "node": ">=v16.19.1"
+  },
   "scripts": {
     "run-file": "tsnd --no-notify -r tsconfig-paths/register --ignore-watch node_modules --transpile-only",
     "create-comics": "npm run run-file -- createComicsSource.ts",
