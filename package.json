@@ -9,11 +9,11 @@
   },
   "scripts": {
     "check-types": "tsc --noEmit",
-    "run-file": "tsnd --no-notify -r tsconfig-paths/register --ignore-watch node_modules --transpile-only",
+    "run-file": "ts-node -r tsconfig-paths/register",
     "create-comics": "npm run run-file -- createComicsSource.ts",
+    "how-much": "npm run run-file -- howMuch.ts",
     "scrap": "npm run run-file -- index.ts",
     "prescrap": "npm run how-much",
-    "how-much": "npm run run-file -- howMuch.ts",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -33,9 +33,7 @@
     "@types/pdfkit": "^0.12.10",
     "husky": "^8.0.3",
     "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.6",
-    "typescript-transform-paths": "^3.4.6"
+    "typescript": "^5.1.6"
   }
 }

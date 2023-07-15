@@ -14,12 +14,7 @@
       "*": ["./src/*"],
       "comics/*": ["./comics/*"],
       "comics": ["./comics"]
-    },
-    "plugins": [
-      {
-        "transform": "typescript-transform-paths"
-      }
-    ]
+    }
   },
   "exclude": ["node_modules"]
 }
