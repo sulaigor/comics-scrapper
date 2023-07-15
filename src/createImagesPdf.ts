@@ -1,20 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import sizeOf from 'image-size';
-import { fromFile } from 'file-type';
+import { lookup as mimeLookup } from 'mime-types';
 import * as PDFKit from 'pdfkit';
 import { handleWriter } from 'writerUtils';
 
 const isImageFile = async (filePath: string): Promise<boolean> => {
   try {
-    const result = await fromFile(filePath);
-
-    if (result) {
-      const { mime } = result;
-      return mime.includes('image');
-    }
-
-    return false;
+    const mime = mimeLookup(filePath);
+    return mime ? mime.includes('image') : false;
   } catch (err) {
     console.log('Is image file error:', err);
     return false;
