@@ -4,17 +4,17 @@
   "main": "index.ts",
   "author": "Igor Šula",
   "license": "MIT",
-  "pre-commit": "type-check",
   "engines": {
     "node": ">=v16.19.1"
   },
   "scripts": {
+    "check-types": "tsc --noEmit",
     "run-file": "tsnd --no-notify -r tsconfig-paths/register --ignore-watch node_modules --transpile-only",
     "create-comics": "npm run run-file -- createComicsSource.ts",
     "scrap": "npm run run-file -- index.ts",
     "prescrap": "npm run how-much",
     "how-much": "npm run run-file -- howMuch.ts",
-    "type-check": "tsc --noEmit"
+    "prepare": "husky install"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -31,7 +31,7 @@
     "@types/mime-types": "^2.1.1",
     "@types/node": "^16.18.38",
     "@types/pdfkit": "^0.12.10",
-    "pre-commit": "^1.2.2",
+    "husky": "^8.0.3",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
