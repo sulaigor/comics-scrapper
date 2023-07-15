@@ -1,34 +1,7 @@
-import { HTMLElement } from 'node-html-parser';
-import { beau } from 'rguard';
-import { IMAGES_REGEX } from 'const';
-import { getHtml } from 'htmlUtils';
+import { IMAGES_LIST_VARIABLE_NAME } from 'const';
+import { getPageVariable } from 'htmlUtils';
 
-const getUrls = (scriptContent: string): string[] | null => {
-  const images =
-    scriptContent.match(new RegExp(IMAGES_REGEX))?.map((img) => img.replace(IMAGES_REGEX, '$1')) || null;
-  if (images) beau(images);
-  return images;
-};
+const DEFAULT_WAIT_SELECTOR = '#containerRoot';
 
-const getComicUrl = (comicUrl: string): string => {
-  const newUrl = new URL(comicUrl);
-  newUrl.searchParams.append('quality', 'hq');
-  return newUrl.toString();
-};
-// queryString.stringify({ quality: 'hq' });
-
-const getScriptWithImages = (html: HTMLElement): HTMLElement | undefined => {
-  const scripts = html.querySelectorAll('script');
-  return scripts.find((scr) => scr.textContent.includes('lstImages'));
-};
-
-export const getImageUrls = async (comicUrl: string): Promise<string[] | null> => {
-  const html = await getHtml(getComicUrl(comicUrl));
-
-  if (html) {
-    const scriptWithUrls = getScriptWithImages(html);
-    if (scriptWithUrls) return getUrls(scriptWithUrls.textContent);
-  }
-
-  return null;
-};
+export const getImageUrls = async (comicUrl: string): Promise<string[] | null> =>
+  getPageVariable<string[]>(comicUrl, DEFAULT_WAIT_SELECTOR, IMAGES_LIST_VARIABLE_NAME);
