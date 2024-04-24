@@ -1,4 +1,4 @@
 import comics from 'comics';
-import { printDownloadComics } from 'printDownloadComics';
+import { printDownloadComics } from 'printComicsUtils';
 
 printDownloadComics(comics);
