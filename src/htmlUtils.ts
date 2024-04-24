@@ -3,30 +3,50 @@ import { newInjectedPage } from 'fingerprint-injector';
 import { parse as parseHTML, HTMLElement } from 'node-html-parser';
 
 let browser: Browser | null = null;
+let browserPage: Page | null = null;
 
-const getPage = async (htmlUrl: string, waitForSelector: string): Promise<Page> => {
+export const closeBrowser = async (): Promise<void> => {
+  if (browser) {
+    await browser.close();
+    browser = null;
+    browserPage = null;
+  }
+};
+
+const getBrowserPage = async (): Promise<Page> => {
   if (!browser) {
     browser = await puppeteer.launch({ headless: false });
   }
 
-  const page = await newInjectedPage(browser, {
-    fingerprintOptions: {
-      devices: ['desktop'],
-      browsers: [{ name: 'chrome', minVersion: 90 }],
-    },
-  });
+  if (!browserPage) {
+    browserPage = await newInjectedPage(browser, {
+      fingerprintOptions: {
+        devices: ['desktop'],
+        browsers: [{ name: 'chrome', minVersion: 90 }],
+      },
+    });
 
-  await page.setJavaScriptEnabled(true);
-  await page.goto(htmlUrl);
-  await page.waitForSelector(waitForSelector, { timeout: 60000 });
-  return page;
+    await browserPage.setJavaScriptEnabled(true);
+  }
+
+  return browserPage;
+};
+
+const openBrowserPageUrl = async (
+  currentBrowserPage: Page,
+  htmlUrl: string,
+  waitForSelector: string,
+): Promise<void> => {
+  await currentBrowserPage.goto(htmlUrl);
+  await currentBrowserPage.waitForSelector(waitForSelector, { timeout: 60000 });
 };
 
 export const getHtml = async (htmlUrl: string, waitForSelector: string): Promise<HTMLElement | null> => {
   try {
-    const page = await getPage(htmlUrl, waitForSelector);
-    const content = await page.content();
-    return parseHTML(content);
+    const currentBrowserPage = await getBrowserPage();
+    await openBrowserPageUrl(currentBrowserPage, htmlUrl, waitForSelector);
+    const pageContent = await currentBrowserPage.content();
+    return parseHTML(pageContent);
   } catch (err) {
     const { message } = err as Error;
     console.log('Download html document failed:', message);
@@ -41,8 +61,9 @@ export const getPageVariable = async <T>(
   varaibleName: string,
 ): Promise<T | null> => {
   try {
-    const page = await getPage(htmlUrl, waitForSelector);
-    const variable = await page.evaluate(varaibleName);
+    const currentBrowserPage = await getBrowserPage();
+    await openBrowserPageUrl(currentBrowserPage, htmlUrl, waitForSelector);
+    const variable = await currentBrowserPage.evaluate(varaibleName);
     return variable as T;
   } catch (err) {
     const { message } = err as Error;

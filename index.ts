@@ -1,6 +1,6 @@
 import rawComics from 'comics';
 import { createTempFolder, createOutputFolder, removeTempFolder } from 'folderUtils';
-import { createComicPdfs } from 'createComicPdfs';
+import { createComicPdfs } from 'createComicPdfUtils';
 import { exitScript } from 'consoleUtils';
 
 (async () => {
