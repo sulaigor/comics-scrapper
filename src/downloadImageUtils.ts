@@ -42,7 +42,7 @@ export const getComicsImageUrls = async (comics: Comic[]): Promise<Record<string
       printColoredMessage(ConsoleColours.RED, `Images not found for ${name} comic...`);
     }
 
-    await sleepBetweenMs(250, 500);
+    await sleepBetweenMs(1000, 4000);
   }
 
   await closeBrowser();
