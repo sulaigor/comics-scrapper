@@ -33,7 +33,7 @@ export const getComicsSource = (linksArr: HTMLElement[]): IComicSource[] =>
   Array.from(linksArr)
     .map((a) => ({
       title: getComicSourceTitle(a.text),
-      link: a.attrs.href,
+      link: a.attrs.href.replace('/Comic', ''),
     }))
     .reverse();
 
