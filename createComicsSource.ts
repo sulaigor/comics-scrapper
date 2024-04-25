@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as rl from 'readline';
 import { NEW_COMIC_SOURCE_FILE } from 'const';
 import { exitScript, tryValue } from 'consoleUtils';
-import { getHtml } from 'htmlUtils';
+import { closeBrowser, getHtml } from 'htmlUtils';
 import {
   IComicSource,
   getComicsSource,
@@ -23,6 +23,7 @@ const LINKS_HOLDER_SELECTOR = 'table.listing';
 readline.question('Enter comics list url:\n', async (htmlUrl) => {
   tryValue(htmlUrl, 'You must enter html url for comics list!');
   const html = await getHtml(htmlUrl, LINKS_HOLDER_SELECTOR);
+  await closeBrowser();
 
   tryValue(html, 'Entered url is not correct!');
   const linksHolder = html!.querySelector(LINKS_HOLDER_SELECTOR);
