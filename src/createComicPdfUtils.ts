@@ -32,7 +32,7 @@ const createComicPdf = async (imageUrls: string[], comicName: string) => {
   try {
     for (const imageIndex in imageUrls) {
       await downloadImage(imageUrls[imageIndex], imageIndex, imagesFolderPath);
-      await sleepBetweenMs(500, 1500);
+      await sleepBetweenMs(500, 1000);
       progressBar.increment();
     }
 

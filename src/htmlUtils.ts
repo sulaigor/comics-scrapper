@@ -22,7 +22,9 @@ const getBrowserPage = async (): Promise<Page> => {
     browserPage = await newInjectedPage(browser, {
       fingerprintOptions: {
         devices: ['desktop'],
-        browsers: [{ name: 'chrome', minVersion: 90 }],
+        browsers: [{ name: 'chrome' }, { name: 'firefox' }, { name: 'safari' }, { name: 'edge' }],
+        locales: ['en', 'de', 'es', 'fr', 'it', 'pl', 'pt'],
+        operatingSystems: ['windows', 'linux', 'macos'],
       },
     });
 

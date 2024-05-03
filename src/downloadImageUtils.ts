@@ -32,17 +32,21 @@ const DEFAULT_WAIT_SELECTOR = '#containerRoot';
 export const getComicsImageUrls = async (comics: Comic[]): Promise<Record<string, string[]>> => {
   const comicsImageUrls: Record<string, string[]> = {};
 
+  let isFirstComic = true;
   for (const { name, url } of comics) {
-    const imageUrls = await getPageVariable<string[]>(url, DEFAULT_WAIT_SELECTOR, IMAGES_LIST_VARIABLE_NAME);
+    if (isFirstComic) {
+      isFirstComic = false;
+    } else {
+      await sleepBetweenMs(5000, 10000);
+    }
 
+    const imageUrls = await getPageVariable<string[]>(url, DEFAULT_WAIT_SELECTOR, IMAGES_LIST_VARIABLE_NAME);
     printColoredMessage(ConsoleColours.RESET, `Download comic image urls for ${name}`);
     if (imageUrls) {
       comicsImageUrls[name] = imageUrls;
     } else {
       printColoredMessage(ConsoleColours.RED, `Images not found for ${name} comic...`);
     }
-
-    await sleepBetweenMs(1000, 4000);
   }
 
   await closeBrowser();
