@@ -1,5 +1,5 @@
 import { HTMLElement } from 'node-html-parser';
-import { ConsoleColours } from 'const';
+import { COMICS_URL_PREFIX, ConsoleColours } from 'const';
 import { printColoredMessage } from 'consoleUtils';
 
 export interface IComicSource {
@@ -33,7 +33,7 @@ export const getComicsSource = (linksArr: HTMLElement[]): IComicSource[] =>
   Array.from(linksArr)
     .map((a) => ({
       title: getComicSourceTitle(a.text),
-      link: a.attrs.href.replace('/Comic', ''),
+      link: a.attrs.href.replace(new URL(COMICS_URL_PREFIX).pathname, ''),
     }))
     .reverse();
 
