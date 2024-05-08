@@ -1,6 +1,6 @@
-import { IComic } from 'comic';
+import { Comic } from 'comic';
 
-export const printDownloadComics = (comics: IComic[]) => {
+export const printDownloadComics = (comics: Comic[]) => {
   console.log(
     '\nI have',
     comics.length,
