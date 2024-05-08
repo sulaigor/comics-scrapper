@@ -12,9 +12,9 @@ export const createComicsSource = (comicsSource: IComicSource[]): string => {
   const ident = '  ';
 
   return [
-    "import { Comic, IComic } from 'comic'",
+    "import { Comic } from 'comic';",
     emptyLine,
-    'const comics: IComic[] = [',
+    'const comics: Comic[] = [',
     ...comicsSource.map(({ title, link }) => `${ident}new Comic('${title}', '${link}'),`),
     '];',
     emptyLine,
