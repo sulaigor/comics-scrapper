@@ -9,16 +9,22 @@ import { IMAGES_LIST_VARIABLE_NAME, ConsoleColours } from 'const';
 import { getPageVariable, closeBrowser } from 'htmlUtils';
 
 const getPaddedFileName = (fileName: string): string => fileName.padStart(5, '0');
+const generateImageName = (imageIndexes: [string, string]): string =>
+  imageIndexes.map(getPaddedFileName).join('-');
 const getImageName = (fileName: string, fileSuffix: string): string =>
   `${getPaddedFileName(fileName)}.${fileSuffix}`;
 
 const getImageFileSuffix = (imageFileName: string): string =>
   imageFileName.split('filename=')[1].split('"').join('').split('.')[1];
 
-export const downloadImage = async (imageUrl: string, index: string, savedFolder: string): Promise<void> => {
+export const downloadImage = async (
+  imageUrl: string,
+  imageIndexes: [string, string],
+  savedFolder: string,
+): Promise<void> => {
   const responseImg = await axios.get(imageUrl, { responseType: 'stream' });
   const fileSuffix = getImageFileSuffix(responseImg.headers['content-disposition']);
-  const imageName = getImageName(index.toString(), fileSuffix);
+  const imageName = getImageName(generateImageName(imageIndexes), fileSuffix);
   const imagePath = path.resolve(savedFolder, imageName);
   const imageWriter = fs.createWriteStream(imagePath);
   responseImg.data.pipe(imageWriter);
@@ -29,23 +35,35 @@ export const downloadImage = async (imageUrl: string, index: string, savedFolder
 const DEFAULT_WAIT_SELECTOR = '#containerRoot';
 
 // Download all comics image urls
-export const getComicsImageUrls = async (comics: Comic[]): Promise<Record<string, string[]>> => {
-  const comicsImageUrls: Record<string, string[]> = {};
+export const getComicsImageUrls = async (comics: Comic[]): Promise<Record<string, string[][]>> => {
+  const comicsImageUrls: Record<string, string[][]> = {};
 
   let isFirstComic = true;
-  for (const { name, url } of comics) {
+  for (const { name, urls } of comics) {
     if (isFirstComic) {
       isFirstComic = false;
     } else {
       await sleepBetweenMs(5000, 10000);
     }
 
-    const imageUrls = await getPageVariable<string[]>(url, DEFAULT_WAIT_SELECTOR, IMAGES_LIST_VARIABLE_NAME);
     printColoredMessage(ConsoleColours.RESET, `Download comic image urls for ${name}`);
-    if (imageUrls) {
+    const imageUrls: string[][] = [];
+    for (const comicUrl of urls) {
+      const innerImageUrls: string[] | null = await getPageVariable<string[]>(
+        comicUrl,
+        DEFAULT_WAIT_SELECTOR,
+        IMAGES_LIST_VARIABLE_NAME,
+      );
+
+      if (innerImageUrls) {
+        imageUrls.push(innerImageUrls);
+      } else {
+        printColoredMessage(ConsoleColours.RED, `Images not found for ${name} comic...`);
+        delete comicsImageUrls[name];
+        continue;
+      }
+
       comicsImageUrls[name] = imageUrls;
-    } else {
-      printColoredMessage(ConsoleColours.RED, `Images not found for ${name} comic...`);
     }
   }
 

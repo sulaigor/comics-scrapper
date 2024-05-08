@@ -15,25 +15,29 @@ import { handleWriter } from 'writerUtils';
 const getComicFolderPath = (comicName: string) => path.resolve(TEMP_FOLDER_PATH, comicName);
 const getComicPdfPath = (comicName: string) => path.resolve(PDF_FOLDER_PATH, `${comicName}.pdf`);
 
-const getImagesProgressBar = (imagesCount: number) => {
+const getImagesProgressBar = (imageUrls: string[][]) => {
   const progressBar = new SingleBar({
-    format: 'Creating [{bar}] {percentage}% | {value}/{total}',
+    format: 'Download images [{bar}] {percentage}% | {value}/{total}',
   });
 
+  const imagesCount = imageUrls.reduce((acc, innerImageUrls) => acc + innerImageUrls.length, 0);
   progressBar.start(imagesCount, 0);
   return progressBar;
 };
 
-const createComicPdf = async (imageUrls: string[], comicName: string) => {
-  const progressBar = getImagesProgressBar(imageUrls.length);
+const createComicPdf = async (imageUrls: string[][], comicName: string) => {
+  const progressBar = getImagesProgressBar(imageUrls);
   const imagesFolderPath = getComicFolderPath(comicName);
   createFolder(imagesFolderPath);
 
   try {
     for (const imageIndex in imageUrls) {
-      await downloadImage(imageUrls[imageIndex], imageIndex, imagesFolderPath);
-      await sleepBetweenMs(500, 1000);
-      progressBar.increment();
+      for (const innerImageIndex in imageUrls[imageIndex]) {
+        const imageUrl = imageUrls[imageIndex][innerImageIndex];
+        await downloadImage(imageUrl, [imageIndex, innerImageIndex], imagesFolderPath);
+        await sleepBetweenMs(1000, 1500);
+        progressBar.increment();
+      }
     }
 
     await createImagesPdf(imagesFolderPath, getComicPdfPath(comicName));
@@ -79,7 +83,7 @@ export const createImagesPdf = async (imagesFolderPath: string, outputPdfPath: s
   return handleWriter(pdfWriter);
 };
 
-export const createComicPdfs = async (rawComics: IComic[]) => {
+export const createComicPdfs = async (rawComics: Comic[]) => {
   const comics: Comic[] = rawComics.map((comic) => (!(comic instanceof Comic) ? new Comic(comic) : comic));
 
   // Download all comics image urls
