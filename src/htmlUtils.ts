@@ -40,7 +40,7 @@ const openBrowserPageUrl = async (
   waitForSelector: string,
 ): Promise<void> => {
   await currentBrowserPage.goto(htmlUrl);
-  await currentBrowserPage.waitForSelector(waitForSelector, { timeout: 60000 });
+  await currentBrowserPage.waitForSelector(waitForSelector, { timeout: 2 * 60000 });
 };
 
 export const getHtml = async (htmlUrl: string, waitForSelector: string): Promise<HTMLElement | null> => {

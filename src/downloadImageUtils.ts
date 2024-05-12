@@ -32,7 +32,7 @@ export const downloadImage = async (
   return handleWriter(imageWriter);
 };
 
-const DEFAULT_WAIT_SELECTOR = '#containerRoot';
+const IMAGE_URLS_WAIT_SELECTOR = '#divImage';
 
 // Download all comics image urls
 export const getComicsImageUrls = async (comics: Comic[]): Promise<Record<string, string[][]>> => {
@@ -51,7 +51,7 @@ export const getComicsImageUrls = async (comics: Comic[]): Promise<Record<string
     for (const comicUrl of urls) {
       const innerImageUrls: string[] | null = await getPageVariable<string[]>(
         comicUrl,
-        DEFAULT_WAIT_SELECTOR,
+        IMAGE_URLS_WAIT_SELECTOR,
         IMAGES_LIST_VARIABLE_NAME,
       );
 
